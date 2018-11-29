@@ -2,7 +2,7 @@
 <div class="container">
   <h1><%= @cocktail.name %></h1>
 
-  <h2>Ingredients and doses</h2>
+  <h2>Ingredients list:</h2>
   <ul class="list-unstyled">
     <% @cocktail.doses.each do |dose| %>
       <% if dose.valid? %>
@@ -24,11 +24,10 @@
   <h3>New dose</h3>
   <%= simple_form_for [@cocktail, @dose] do |f| %>
     <%= f.input :description %>
-    <%= f.association :ingredient %>
+    <%= f.association :ingredient,
+      input_html: { class: 'select2' }
+       %>
     <%= f.submit class: 'btn btn-outline-default' %>
   <% end %>
 
 </div>
-
-
-

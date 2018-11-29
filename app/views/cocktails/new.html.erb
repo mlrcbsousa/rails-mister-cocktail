@@ -1,7 +1,9 @@
 <!-- app/views/cocktails/new.html.erb -->
-<h1>New cocktail</h1>
+<div class="container">
+  <h1>New cocktail</h1>
 
-<%= simple_form_for(@cocktail) do |f| %>
-  <%= f.input :name %>
-  <%= f.submit class: 'btn btn-outline-default' %>
-<% end %>
+  <%= simple_form_for(@cocktail) do |f| %>
+    <%= f.input :name %>
+    <%= f.submit class: 'btn btn-outline-default' %>
+  <% end %>
+</div>
