@@ -16,7 +16,7 @@ Ingredient.destroy_all
 
 puts 'Generating new ingredients...'
 
-results[:drinks][0..49].each do |result|
+results[:drinks].each do |result|
   Ingredient.create!(name: result[:strIngredient1])
 end
 
