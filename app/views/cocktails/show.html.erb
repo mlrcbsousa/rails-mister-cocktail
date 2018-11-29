@@ -2,7 +2,9 @@
 <div class="container">
   <h1><%= @cocktail.name %></h1>
 
-  <h2>Ingredients list:</h2>
+  <hr>
+
+  <h2>Ingredients:</h2>
   <ul class="list-unstyled">
     <% @cocktail.doses.each do |dose| %>
       <% if dose.valid? %>
@@ -25,19 +27,12 @@
   <%= simple_form_for [@cocktail, @dose] do |f| %>
     <%= f.input :description %>
     <%= f.association :ingredient, input_html: { class: 'select2' } %>
-    <%= f.submit class: 'btn btn-outline-default' %>
-  <% end %>
-
-  <h2>New review</h2>
-  <%= simple_form_for [@cocktail, @review] do |f| %>
-    <%= f.input :content %>
-    <%= f.input :rating, collection: 0..5 %>
-    <%= f.submit "add a review", class: "btn btn-primary" %>
+    <%= f.submit class: 'btn btn-default' %>
   <% end %>
 
   <hr>
 
-  <p><strong>Reviews:</strong></p>
+  <h2>Reviews:</h2>
   <ul class="list-unstyled">
     <% @cocktail.reviews.each do |review| %>
       <li>
@@ -51,4 +46,10 @@
     <% end %>
   </ul>
 
+  <h3>New review</h3>
+  <%= simple_form_for [@cocktail, @review] do |f| %>
+    <%= f.input :content %>
+    <%= f.input :rating, collection: 0..5 %>
+    <%= f.submit class: "btn btn-default" %>
+  <% end %>
 </div>
