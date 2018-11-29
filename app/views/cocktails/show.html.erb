@@ -28,4 +28,27 @@
     <%= f.submit class: 'btn btn-outline-default' %>
   <% end %>
 
+  <h2>New review</h2>
+  <%= simple_form_for [@cocktail, @review] do |f| %>
+    <%= f.input :content %>
+    <%= f.input :rating, collection: 0..5 %>
+    <%= f.submit "add a review", class: "btn btn-primary" %>
+  <% end %>
+
+  <hr>
+
+  <p><strong>Reviews:</strong></p>
+  <ul class="list-unstyled">
+    <% @cocktail.reviews.each do |review| %>
+      <li>
+        <% if review.valid? %>
+          <% review.rating.times do %>
+            <i class="fas fa-fire"></i>
+          <% end %>
+          <%= review.content %>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+
 </div>
