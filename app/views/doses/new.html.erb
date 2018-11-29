@@ -1,9 +1,0 @@
-<!-- app/views/doses/new.html.erb -->
-
-<h1>New dose</h1>
-
-<%= simple_form_for [@cocktail, @dose] do |f| %>
-  <%= f.input :description %>
-  <%= f.association :ingredient %>
-  <%= f.submit class: 'btn btn-outline-default' %>
-<% end %>

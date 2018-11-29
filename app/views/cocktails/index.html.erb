@@ -1,10 +1,16 @@
 <!-- app/views/cocktails/index.html.erb -->
-<h1>List of Cocktails</h1>
+<div class="container">
+  <h1>List of Cocktails</h1>
 
-<%= link_to 'Add Cocktail', new_cocktail_path %>
-
-<% @cocktails.each do |cocktail| %>
-  <%= link_to cocktail_path(cocktail) do %>
-    <h3><%= cocktail.name %></h3>
+  <% @cocktails.each do |cocktail| %>
+    <%= link_to cocktail_path(cocktail) do %>
+      <h3><%= cocktail.name %></h3>
+    <% end %>
   <% end %>
-<% end %>
+
+  <%= link_to new_cocktail_path do %>
+    <button type="button" class="btn btn-default" aria-label="Left Align">
+      <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+    </button>
+  <% end %>
+</div>

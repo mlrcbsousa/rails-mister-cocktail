@@ -1,20 +1,34 @@
 <!-- app/views/cocktails/show.html.erb -->
-<%= link_to 'Back to Cocktails', cocktails_path %>
-<h2><%= @cocktail.name %></h2>
+<div class="container">
+  <h1><%= @cocktail.name %></h1>
 
-<h3>Ingredients and doses</h3>
-<ul class="list-unstyled">
-  <% @cocktail.doses.each do |dose| %>
-    <li>
-      <strong><%= dose.description %></strong>:
-      <%= dose.ingredient.name %>
+  <h2>Ingredients and doses</h2>
+  <ul class="list-unstyled">
+    <% @cocktail.doses.each do |dose| %>
+      <% if dose.valid? %>
+        <li>
+          <strong><%= dose.description %></strong>:
 
-      <%= link_to dose_path(dose),
-            method: :delete,
-            data: { confirm: "Are you sure?" } do %>
-              <i class="far fa-trash-alt"></i>
-            <% end %>
-    </li>
+          <%= dose.ingredient.name %>
+
+          <%= link_to dose_path(dose),
+                method: :delete,
+                data: { confirm: "Are you sure?" } do %>
+                  <i class="far fa-trash-alt"></i>
+                <% end %>
+        </li>
+      <% end %>
+    <% end %>
+  </ul>
+
+  <h3>New dose</h3>
+  <%= simple_form_for [@cocktail, @dose] do |f| %>
+    <%= f.input :description %>
+    <%= f.association :ingredient %>
+    <%= f.submit class: 'btn btn-outline-default' %>
   <% end %>
-</ul>
-<%= link_to 'Add Dose', new_cocktail_dose_path(@cocktail) %>
+
+</div>
+
+
+
