@@ -30,32 +30,90 @@ require 'open-uri'
 
 #---- Delete everything
 
-# puts 'Clearing database of Doses...'
-# Dose.destroy_all
+puts 'Clearing database of Doses...'
+Dose.destroy_all
 
-# puts 'Clearing database of Ingredients...'
-# Ingredient.destroy_all
+puts 'Clearing database of Ingredients...'
+Ingredient.destroy_all
 
 puts 'Clearing database of Reviews...'
 Review.destroy_all
 
-# puts 'Clearing database of Cocktails...'
-# Cocktail.destroy_all
+puts 'Clearing database of Cocktails...'
+Cocktail.destroy_all
 
-# #---- Generate Ingredients
+#---- Generate Ingredients
 
-# url = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list'
-# results = JSON.parse(open(url).read, symbolize_names: true)
+url = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list'
+results = JSON.parse(open(url).read, symbolize_names: true)
 
-# puts 'Generating new Ingredients...'
+puts 'Generating new Ingredients...'
 
-# results[:drinks].each do |result|
-#   Ingredient.create!(name: result[:strIngredient1])
-# end
+results[:drinks].each do |result|
+  Ingredient.create!(name: result[:strIngredient1])
+end
 
-# puts "Created #{Ingredient.count} ingredients in the database..."
+puts "Created #{Ingredient.count} ingredients in the database..."
 
-# #---- Generate Cocktails
+#---- Generate Cocktails
+
+results = JSON.parse(File.read("drinks.json"), symbolize_names: true)
+
+puts 'Generating new Cocktails...'
+
+results[:drinks].each do |result|
+  Cocktail.create(
+    name: result[:strDrink],
+    picture_url: result[:strDrinkThumb]
+  )
+end
+
+puts "Created #{Cocktail.count} cocktails in the database..."
+
+#---- Generate Doses
+
+puts 'Generating new Doses...'
+
+# results = JSON.parse(File.read("drinks.json"), symbolize_names: true)
+
+results.each do |result|
+  cocktail = Cocktail.find_by(name: result[:strDrink])
+
+  (1..15).each do |n|
+    ingredient = Ingredient.find_by(name: result[:"strIngredient#{n}"])
+    if ingredient
+      cocktail.doses.create(
+        description: result[:"strMeasure#{n}"],
+        ingredient: ingredient
+      )
+    elsif result[:"strIngredient#{n}"] && result[:"strIngredient#{n}"].match?(/\w/)
+      ingredient = Ingredient.create(name: result[:"strIngredient#{n}"])
+      cocktail.doses.create(
+        description: result[:"strMeasure#{n}"],
+        ingredient: ingredient
+      )
+    end
+  end
+end
+
+puts "New total ingredients: #{Ingredient.count}..."
+puts "Created #{Dose.count} doses in the database..."
+
+#---- Generate Reviews
+
+puts 'Generating new Reviews...'
+
+Cocktail.all.each do |cocktail|
+  rand(5..10).times do
+    cocktail.reviews.create(
+      content: Faker::ChuckNorris.fact,
+      rating: rand(0..5)
+    )
+  end
+end
+
+puts "Created #{Review.count} reviews in the database..."
+puts "Enjoy!"
 
 # # all the categories
 # categories = [
@@ -72,7 +130,6 @@ Review.destroy_all
 #   'https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Soft%20Drink%20/%20Soda'
 # ]
 
-# puts 'Generating new Cocktails...'
 
 # categories.each do |category|
 #   results = JSON.parse(open(category).read, symbolize_names: true)
@@ -83,50 +140,3 @@ Review.destroy_all
 #     )
 #   end
 # end
-
-# puts "Created #{Cocktail.count} cocktails in the database..."
-
-# #---- Generate Doses
-
-# puts 'Generating new Doses...'
-
-# results = JSON.parse(File.read("drinks.json"), symbolize_names: true)
-
-# results.each do |result|
-#   cocktail = Cocktail.find_by(name: result[:strDrink])
-
-#   (1..15).each do |n|
-#     ingredient = Ingredient.find_by(name: result[:"strIngredient#{n}"])
-#     if ingredient
-#       cocktail.doses.create(
-#         description: result[:"strMeasure#{n}"],
-#         ingredient: ingredient
-#       )
-#     elsif result[:"strIngredient#{n}"] && result[:"strIngredient#{n}"].match?(/\w/)
-#       ingredient = Ingredient.create(name: result[:"strIngredient#{n}"])
-#       cocktail.doses.create(
-#         description: result[:"strMeasure#{n}"],
-#         ingredient: ingredient
-#       )
-#     end
-#   end
-# end
-
-# puts "Created #{Dose.count} doses in the database..."
-
-# #---- Generate Reviews
-
-puts 'Generating new Reviews...'
-
-
-Cocktail.all.each do |cocktail|
-  rand(5..10).times do
-    cocktail.reviews.create(
-      content: Faker::ChuckNorris.fact,
-      rating: rand(0..5)
-    )
-  end
-end
-
-puts "Created #{Review.count} reviews in the database..."
-puts "Enjoy!"
