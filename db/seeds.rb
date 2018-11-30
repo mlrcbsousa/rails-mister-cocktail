@@ -102,6 +102,12 @@ results.each do |result|
         description: result[:"strMeasure#{n}"],
         ingredient: ingredient
       )
+    elsif result[:"strIngredient#{n}"] && result[:"strIngredient#{n}"].match?(/\w/)
+      ingredient = Ingredient.create(name: result[:"strIngredient#{n}"])
+      cocktail.doses.create(
+        description: result[:"strMeasure#{n}"],
+        ingredient: ingredient
+      )
     end
   end
 end
