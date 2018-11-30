@@ -61,7 +61,7 @@ results = JSON.parse(File.read("drinks.json"), symbolize_names: true)
 
 puts 'Generating new Cocktails...'
 
-results[:drinks].each do |result|
+results.each do |result|
   Cocktail.create(
     name: result[:strDrink],
     picture_url: result[:strDrinkThumb]
