@@ -1,5 +1,33 @@
 require 'open-uri'
 
+# #---- Generate drinks.json
+
+# results = JSON.parse(File.read("idDrinks.json"), symbolize_names: true)
+
+# results_1 = results[0..49]
+# results_2 = results[50..99]
+# results_3 = results[100..149]
+# results_4 = results[150..199]
+# results_5 = results[200..249]
+# results_6 = results[250..299]
+# results_7 = results[300..349]
+# results_8 = results[350..399]
+# results_9 = results[400..449]
+# results_10 = results[450..499]
+# results_11 = results[500..546]
+
+# array = []
+
+# results_11.each do |result|
+#   cocktail_url = "https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=#{result[:id]}"
+#   cocktail = JSON.parse(open(cocktail_url).read, symbolize_names: true)[:drinks][0]
+#   array << cocktail
+# end
+
+# File.open("drinks.json","w") do |f|
+#   f.write(JSON.pretty_generate(array))
+# end
+
 #---- Delete everything
 
 puts 'Clearing database of Doses...'
@@ -60,28 +88,23 @@ Review.destroy_all
 
 #---- Generate Doses
 
-puts 'Generating new Doses...'
+# puts 'Generating new Doses...'
 
-Cocktail.all.each do |cocktail|
-  name = cocktail.name
-  cocktail_url = "https://www.thecocktaildb.com/api/json/v1/1/search.php?s=#{name}"
-  cocktail_json = JSON.parse(open(cocktail_url).read, symbolize_names: true)[:drinks][0]
+results = JSON.parse(File.read("drinks.json"), symbolize_names: true)
 
-  n = 1
-  while cocktail_json[:"strMeasure#{n}"] && cocktail_json[:"strMeasure#{n}"].match?(/\w/) && cocktail_json[:"strIngredient#{n}"] && cocktail_json[:"strIngredient#{n}"].match?(/\w/)
+results.each do |result|
+  cocktail = Cocktail.find_by(name: result[:strDrink])
 
-    # then validate ingredients and build Dose instances
-    ingredient = Ingredient.find_by(name: cocktail_json[:"strIngredient#{n}"])
+  (1..15).each do |n|
+    ingredient = Ingredient.find_by(name: result[:"strIngredient#{n}"])
     if ingredient
       cocktail.doses.create(
-        description: cocktail_json[:"strMeasure#{n}"],
+        description: result[:"strMeasure#{n}"],
         ingredient: ingredient
       )
     end
-    n += 1
   end
-
 end
 
-puts "Created #{Dose.count} doses in the database..."
-puts "Enjoy!"
+# puts "Created #{Dose.count} doses in the database..."
+# puts "Enjoy!"
