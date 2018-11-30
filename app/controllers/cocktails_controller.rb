@@ -1,12 +1,8 @@
 class CocktailsController < ApplicationController
   def index
     @total = Cocktail.count
-    if params[:query].nil?
-      @cocktails = Cocktail.all
-    else
-      @query = params[:query]
-      @cocktails = Cocktail.where("name LIKE '%#{params[:query]}%'")
-    end
+    @query = params[:query]
+    @cocktails = @query ? Cocktail.where("name LIKE '%#{@query}%'") : Cocktail.all
   end
 
   def show
@@ -22,7 +18,6 @@ class CocktailsController < ApplicationController
   def create
     @cocktail = Cocktail.new(cocktail_params)
     if @cocktail.save
-      @cocktail.save
       redirect_to cocktail_path(@cocktail)
     else
       render :new
