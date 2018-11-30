@@ -54,9 +54,9 @@
       <div class="cocktail-show-card">
         <h3>New Dose</h3>
         <%= simple_form_for [@cocktail, @dose] do |f| %>
-          <%= f.input :description %>
+          <%= f.input :description, label: 'Quantity' %>
           <%= f.association :ingredient, input_html: { class: 'select2' } %>
-          <%= f.submit class: 'btn btn-default' %>
+          <%= f.submit 'Add', class: 'btn btn-default' %>
         <% end %>
       </div>
 
@@ -65,7 +65,7 @@
         <%= simple_form_for [@cocktail, @review] do |f| %>
           <%= f.input :content %>
           <%= f.input :rating, collection: 0..5 %>
-          <%= f.submit class: "btn btn-default" %>
+          <%= f.submit 'Add', class: "btn btn-default" %>
         <% end %>
       </div>
     </div>
