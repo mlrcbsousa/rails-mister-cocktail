@@ -15,7 +15,7 @@
           <% @cocktail.doses.each do |dose| %>
               <li>
                 <% if dose.valid? %>
-                  <strong><%= dose.description %></strong>:
+                  <strong><%= dose.description %>:</strong>
 
                   <%= dose.ingredient.name %>
 

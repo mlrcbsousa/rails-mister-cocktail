@@ -65,3 +65,4 @@ gem 'simple_form'
 
 
 gem 'json'
+gem 'faker'

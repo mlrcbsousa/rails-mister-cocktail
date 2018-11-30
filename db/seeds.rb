@@ -30,8 +30,8 @@ require 'open-uri'
 
 #---- Delete everything
 
-puts 'Clearing database of Doses...'
-Dose.destroy_all
+# puts 'Clearing database of Doses...'
+# Dose.destroy_all
 
 # puts 'Clearing database of Ingredients...'
 # Ingredient.destroy_all
@@ -86,31 +86,47 @@ Review.destroy_all
 
 # puts "Created #{Cocktail.count} cocktails in the database..."
 
-#---- Generate Doses
+# #---- Generate Doses
 
 # puts 'Generating new Doses...'
 
-results = JSON.parse(File.read("drinks.json"), symbolize_names: true)
+# results = JSON.parse(File.read("drinks.json"), symbolize_names: true)
 
-results.each do |result|
-  cocktail = Cocktail.find_by(name: result[:strDrink])
+# results.each do |result|
+#   cocktail = Cocktail.find_by(name: result[:strDrink])
 
-  (1..15).each do |n|
-    ingredient = Ingredient.find_by(name: result[:"strIngredient#{n}"])
-    if ingredient
-      cocktail.doses.create(
-        description: result[:"strMeasure#{n}"],
-        ingredient: ingredient
-      )
-    elsif result[:"strIngredient#{n}"] && result[:"strIngredient#{n}"].match?(/\w/)
-      ingredient = Ingredient.create(name: result[:"strIngredient#{n}"])
-      cocktail.doses.create(
-        description: result[:"strMeasure#{n}"],
-        ingredient: ingredient
-      )
-    end
+#   (1..15).each do |n|
+#     ingredient = Ingredient.find_by(name: result[:"strIngredient#{n}"])
+#     if ingredient
+#       cocktail.doses.create(
+#         description: result[:"strMeasure#{n}"],
+#         ingredient: ingredient
+#       )
+#     elsif result[:"strIngredient#{n}"] && result[:"strIngredient#{n}"].match?(/\w/)
+#       ingredient = Ingredient.create(name: result[:"strIngredient#{n}"])
+#       cocktail.doses.create(
+#         description: result[:"strMeasure#{n}"],
+#         ingredient: ingredient
+#       )
+#     end
+#   end
+# end
+
+# puts "Created #{Dose.count} doses in the database..."
+
+# #---- Generate Reviews
+
+puts 'Generating new Reviews...'
+
+
+Cocktail.all.each do |cocktail|
+  rand(5..10).times do
+    cocktail.reviews.create(
+      content: Faker::ChuckNorris.fact,
+      rating: rand(0..5)
+    )
   end
 end
 
-# puts "Created #{Dose.count} doses in the database..."
-# puts "Enjoy!"
+puts "Created #{Review.count} reviews in the database..."
+puts "Enjoy!"
