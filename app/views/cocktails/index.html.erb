@@ -1,16 +1,39 @@
 <!-- app/views/cocktails/index.html.erb -->
 <div class="container">
-  <h1>List of Cocktails</h1>
 
-  <% @cocktails.each do |cocktail| %>
-    <%= link_to cocktail_path(cocktail) do %>
-      <h3><%= cocktail.name %></h3>
+  <div class="row">
+    <div class="col-xs-12">
+      <h1>All our Cocktails <%= "(#{@total})" if @query.nil? %></h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <% unless @query.nil? %>
+        <p>You searched for <em class="text-primary">"<%= @query %>"</em>.. We found <strong class="text-primary"><%= @cocktails.count %></strong> cocktails out of <strong><%= @total %></strong> on our website.</p>
+      <% end %>
+    </div>
+  </div>
+  <div class="row">
+
+    <% @cocktails.each do |cocktail| %>
+      <div class="col-xs-12 col-sm-4">
+
+        <%= link_to cocktail_path(cocktail) do %>
+          <div class="cocktail-card">
+            <div class="cocktail-card-image" style="background-image: url(<%= cocktail.picture_url %>)"></div>
+            <div class="cocktail-card-content">
+              <div class="cocktail-card-title">
+                <h4><%= cocktail.name %></h4>
+              </div>
+            </div>
+            <div class="cocktail-card-actions">
+              <%= link_to 'More info', cocktail_path(cocktail) %>
+            </div>
+          </div>
+        <% end %>
+
+      </div>
     <% end %>
-  <% end %>
 
-  <%= link_to new_cocktail_path do %>
-    <button type="button" class="btn btn-default" aria-label="Left Align">
-      <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-    </button>
-  <% end %>
+  </div>
 </div>

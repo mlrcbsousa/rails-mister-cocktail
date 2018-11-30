@@ -1,9 +1,17 @@
 <!-- app/views/cocktails/new.html.erb -->
-<div class="container">
-  <h1>New cocktail</h1>
-
-  <%= simple_form_for(@cocktail) do |f| %>
-    <%= f.input :name %>
-    <%= f.submit class: 'btn btn-outline-default' %>
-  <% end %>
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-sm-offset-3 m-auto">
+      <div class="cocktail-form">
+        <h1>New cocktail</h1>
+        <div class="mt-3">
+          <%= simple_form_for(@cocktail) do |f| %>
+            <%= f.input :name %>
+            <%= f.input :picture_url %>
+            <%= f.submit class: 'btn btn-outline-default' %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

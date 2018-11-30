@@ -1,5 +1,19 @@
-<%= link_to cocktails_path do %>
-<button type="button" class="btn btn-default" aria-label="Left Align">
-    <span class="glyphicon glyphicon-glass" aria-hidden="true"></span>
-  </button>
-<% end %>
+<nav class="my-navbar">
+  <%= link_to cocktails_path do %>
+  <button type="button" class="btn btn-default" aria-label="Left Align">
+      <span class="glyphicon glyphicon-glass" aria-hidden="true"></span>
+    </button>
+  <% end %>
+
+  <div class="nav-right">
+    <form class="form-inline" action='/cocktails' method="get">
+      <input class="form-control" name="query" type="search" placeholder=<%= @query ? @query : "Search" %>>
+      <button class="btn btn-success" type="submit">Search</button>
+    </form>
+    <%= link_to new_cocktail_path do %>
+      <button type="button" class="btn btn-default" aria-label="Left Align">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+      </button>
+    <% end %>
+  </div>
+</nav>
