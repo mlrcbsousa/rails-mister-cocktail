@@ -1,5 +1,5 @@
 <nav class="my-navbar">
-  <%= link_to cocktails_path do %>
+  <%= link_to cocktails_path, class: "navbar-brand" do %>
   <button type="button" class="btn btn-default" aria-label="Left Align">
       <span class="glyphicon glyphicon-glass" aria-hidden="true"></span>
     </button>
@@ -11,7 +11,7 @@
       <button class="btn btn-success" type="submit">Search</button>
     </form>
     <%= link_to new_cocktail_path do %>
-      <button type="button" class="btn btn-default" aria-label="Left Align">
+      <button type="button" class="btn btn-default" aria-label="Right Align">
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
       </button>
     <% end %>
