@@ -74,11 +74,11 @@ require 'open-uri'
 
 #---- Delete everything
 
-# puts 'Clearing database of Doses...'
-# Dose.destroy_all
+puts 'Clearing database of Doses...'
+Dose.destroy_all
 
-# puts 'Clearing database of Ingredients...'
-# Ingredient.destroy_all
+puts 'Clearing database of Ingredients...'
+Ingredient.destroy_all
 
 # puts 'Clearing database of Reviews...'
 # Review.destroy_all
@@ -86,20 +86,20 @@ require 'open-uri'
 # puts 'Clearing database of Cocktails...'
 # Cocktail.destroy_all
 
-# results = JSON.parse(File.read("drinks.json"), symbolize_names: true)
+results = JSON.parse(File.read("drinks.json"), symbolize_names: true)
 
-# #---- Generate Ingredients
+#---- Generate Ingredients
 
-# puts 'Generating new Ingredients...'
+puts 'Generating new Ingredients...'
 
-# results.each do |result|
-#   (1..15).each do |n|
-#     name = result[:"strIngredient#{n}"]
-#     Ingredient.create(name: name) if name&.match?(/\w/)
-#   end
-# end
+results.each do |result|
+  (1..15).each do |n|
+    name = result[:"strIngredient#{n}"]
+    Ingredient.create(name: name) if name&.match?(/\w/)
+  end
+end
 
-# puts "Created #{Ingredient.count} ingredients in the database..."
+puts "Created #{Ingredient.count} ingredients in the database..."
 
 # results_1 = results[200..224]
 # results_2 = results[225..249]
@@ -125,40 +125,39 @@ require 'open-uri'
 # puts 'Generating new Cocktails...'
 
 # results.each do |result|
-#   cocktail = Cocktail.create(
-#     name: result[:strDrink],
-#     picture_url: result[:strDrinkThumb]
+#   Cocktail.create(
+#     name: result[:strDrink]
 #   )
 # end
 
 # cloudinary_urls = JSON.parse(File.read("cloudinary_urls.json"), symbolize_names: true)
 
-cloudinary_urls.each do |url|
-  cocktail = Cocktail.find_by(name: url[:name])
-  cocktail.remote_photo_url = url[:cloudinary_url]
-  cocktail.save
-end
-
-# puts "#{Cocktail.count} cocktails in the database..."
-
-# #---- Generate Doses
-
-# puts 'Generating new Doses...'
-
-# results.each do |result|
-#   cocktail = Cocktail.find_by(name: result[:strDrink])
-#   (1..15).each do |n|
-#     ingredient = Ingredient.find_by(name: result[:"strIngredient#{n}"])
-#     next unless ingredient
-
-#     cocktail.doses.create(
-#       description: result[:"strMeasure#{n}"],
-#       ingredient: ingredient
-#     )
-#   end
+# cloudinary_urls.each do |url|
+#   cocktail = Cocktail.find_by(name: url[:name])
+#   cocktail.remote_photo_url = url[:cloudinary_url]
+#   cocktail.save
 # end
 
-# puts "Created #{Dose.count} doses in the database..."
+# puts "Created #{Cocktail.count} cocktails in the database..."
+
+#---- Generate Doses
+
+puts 'Generating new Doses...'
+
+results.each do |result|
+  cocktail = Cocktail.find_by(name: result[:strDrink])
+  (1..15).each do |n|
+    ingredient = Ingredient.find_by(name: result[:"strIngredient#{n}"])
+    next unless ingredient
+
+    cocktail.doses.create(
+      description: result[:"strMeasure#{n}"],
+      ingredient: ingredient
+    )
+  end
+end
+
+puts "Created #{Dose.count} doses in the database..."
 
 # #---- Generate Reviews
 

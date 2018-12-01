@@ -7,8 +7,7 @@
         <div class="mt-3">
           <%= simple_form_for(@cocktail) do |f| %>
             <%= f.input :name %>
-            <%= f.input :picture_url %>
-            <%= f.input :remote_photo_url %>
+            <%= f.input :remote_photo_url, label: 'Photo url' %>
             <%= f.input :photo_cache, as: :hidden %>
             <%= f.submit class: 'btn btn-outline-default' %>
           <% end %>
