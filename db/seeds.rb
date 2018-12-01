@@ -86,7 +86,7 @@ require 'open-uri'
 # puts 'Clearing database of Cocktails...'
 # Cocktail.destroy_all
 
-results = JSON.parse(File.read("drinks.json"), symbolize_names: true)
+# results = JSON.parse(File.read("drinks.json"), symbolize_names: true)
 
 # #---- Generate Ingredients
 
@@ -101,35 +101,45 @@ results = JSON.parse(File.read("drinks.json"), symbolize_names: true)
 
 # puts "Created #{Ingredient.count} ingredients in the database..."
 
-results_1 = results[0..49]
-results_2 = results[50..99]
-results_3 = results[100..149]
-results_4 = results[150..199]
-results_5 = results[200..249]
-results_6 = results[250..299]
-results_7 = results[300..349]
-results_8 = results[350..399]
-results_9 = results[400..449]
-results_10 = results[450..499]
-results_11 = results[500..546]
+# results_1 = results[200..224]
+# results_2 = results[225..249]
+# results_3 = results[250..274]
+# results_4 = results[275..299]
+# results_5 = results[300..324]
+# results_6 = results[325..349]
+# results_7 = results[350..374]
+# results_8 = results[375..399]
+# results_9 = results[400..424]
+# results_10 = results[425..449]
+# results_11 = results[450..474]
+# results_12 = results[475..499]
+# results_13 = results[500..524]
+# results_14 = results[525..546]
 
-# #---- Manually run this iteration for each of the results_# array above while
-# #---- waiting a couple of seconds before each for best results
+# #---- Manually run this iteration for each of the results_# array while
+# #---- waiting a couple of seconds before each for best results.
+# #---- I did it in 25 results x 22 batches...
 
 #---- Generate Cocktails
 
-puts 'Generating new Cocktails...'
+# puts 'Generating new Cocktails...'
 
-results_1.each do |result|
-  cocktail = Cocktail.new(
-    name: result[:strDrink],
-    picture_url: result[:strDrinkThumb]
-  )
-  cocktail.remote_photo_url = result[:strDrinkThumb]
+# results.each do |result|
+#   cocktail = Cocktail.create(
+#     name: result[:strDrink],
+#     picture_url: result[:strDrinkThumb]
+#   )
+# end
+
+# cloudinary_urls = JSON.parse(File.read("cloudinary_urls.json"), symbolize_names: true)
+
+cloudinary_urls.each do |url|
+  cocktail = Cocktail.find_by(name: url[:name])
+  cocktail.remote_photo_url = url[:cloudinary_url]
   cocktail.save
 end
 
-puts "Created #{Cocktail.count} cocktails in the database..."
+# puts "#{Cocktail.count} cocktails in the database..."
 
 # #---- Generate Doses
 
@@ -166,3 +176,17 @@ puts "Created #{Cocktail.count} cocktails in the database..."
 # puts "Created #{Review.count} reviews in the database..."
 # puts "Enjoy!"
 
+# #---- GENERATE JSON WITH CLOUDINARY URLs from local db per Cocktail::name
+
+# array = []
+
+# Cocktail.all.each do |cocktail|
+#   array << {
+#     name: cocktail.name,
+#     cloudinary_url: cocktail.photo.url
+#   }
+# end
+
+# File.open('cloudinary_urls.json', 'w') do |f|
+#   f.write(JSON.pretty_generate(array))
+# end

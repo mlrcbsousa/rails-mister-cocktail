@@ -21,7 +21,7 @@
 
         <%= link_to cocktail_path(cocktail) do %>
           <div class="cocktail-card">
-            <div class="cocktail-card-image" style="background-image: url(<%= cocktail.picture_url %>)"></div>
+            <div class="cocktail-card-image" style="background-image: url(<%= cl_image_path cocktail.photo.url(:thumbnail) %>)"></div>
             <div class="cocktail-card-content">
               <div class="cocktail-card-title">
                 <h4><%= cocktail.name %></h4>

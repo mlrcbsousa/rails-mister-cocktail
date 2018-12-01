@@ -3,8 +3,12 @@ class PhotoUploader < CarrierWave::Uploader::Base
   # process eager: true # Force version generation at upload time.
   process convert: 'jpg'
 
+  def delete_remote?
+    false
+  end
+
   def public_id
-    "lewagon/mistercocktails/#{model.class.downcase}/" + Cloudinary::Utils.random_public_id
+    "lewagon/mistercocktails/#{model.class}/" + Cloudinary::Utils.random_public_id
   end
 
   version :thumbnail do
