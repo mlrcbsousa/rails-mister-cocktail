@@ -70,75 +70,56 @@ require 'open-uri'
 #   f.write(JSON.pretty_generate(array))
 # end
 
-# #---- SEEDING THE DATABASE
+#---- SEEDING THE DATABASE
 
 #---- Delete everything
 
 puts 'Clearing database of Doses...'
 Dose.destroy_all
 
-# puts 'Clearing database of Ingredients...'
-# Ingredient.destroy_all
+puts 'Clearing database of Ingredients...'
+Ingredient.destroy_all
 
-# puts 'Clearing database of Reviews...'
-# Review.destroy_all
+puts 'Clearing database of Reviews...'
+Review.destroy_all
 
-# puts 'Clearing database of Cocktails...'
-# Cocktail.destroy_all
+puts 'Clearing database of Cocktails...'
+Cocktail.destroy_all
 
 results = JSON.parse(File.read("drinks.json"), symbolize_names: true)
 
 # ---- Generate Ingredients
 
-# puts 'Generating new Ingredients...'
+puts 'Generating new Ingredients...'
 
-# results.each do |result|
-#   (1..15).each do |n|
-#     name = result[:"strIngredient#{n}"]
-#     Ingredient.create(name: name) if name&.match?(/\w/)
-#   end
-# end
+results.each do |result|
+  (1..15).each do |n|
+    name = result[:"strIngredient#{n}"]
+    Ingredient.create(name: name) if name&.match?(/\w/)
+  end
+end
 
-# puts "Created #{Ingredient.count} ingredients in the database..."
-
-# results_1 = results[200..224]
-# results_2 = results[225..249]
-# results_3 = results[250..274]
-# results_4 = results[275..299]
-# results_5 = results[300..324]
-# results_6 = results[325..349]
-# results_7 = results[350..374]
-# results_8 = results[375..399]
-# results_9 = results[400..424]
-# results_10 = results[425..449]
-# results_11 = results[450..474]
-# results_12 = results[475..499]
-# results_13 = results[500..524]
-# results_14 = results[525..546]
-
-# #---- Manually run this iteration for each of the results_# array while
-# #---- waiting a couple of seconds before each for best results.
-# #---- I did it in 25 results x 22 batches...
+puts "Created #{Ingredient.count} ingredients in the database..."
 
 #---- Generate Cocktails
 
-# puts 'Generating new Cocktails...'
+puts 'Generating new Cocktails...'
 
-# results.each do |result|
-#   Cocktail.create(
-#     name: result[:strDrink]
-#   )
-# end
+results.each do |result|
+  Cocktail.create(
+    name: result[:strDrink]
+  )
+end
 
-# cloudinary_urls = JSON.parse(File.read("cloudinary_urls.json"), symbolize_names: true)
+cloudinary_urls = JSON.parse(File.read("cloudinary_urls.json"), symbolize_names: true)
 
-# cloudinary_urls.each do |url|
-#   cocktail = Cocktail.find_by(name: url[:name])
-#   cocktail.remote_photo_url = url[:cloudinary_url]
-#   cocktail.save
-# end
+cloudinary_urls.each do |url|
+  cocktail = Cocktail.find_by(name: url[:name])
+  cocktail.remote_photo_url = url[:cloudinary_url]
+  cocktail.save
+end
 
-# puts "Created #{Cocktail.count} cocktails in the database..."
+puts "Created #{Cocktail.count} cocktails in the database..."
 
 #---- Generate Doses
 
@@ -159,23 +140,23 @@ end
 
 puts "Created #{Dose.count} doses in the database..."
 
-# #---- Generate Reviews
+#---- Generate Reviews
 
-# puts 'Generating new Reviews...'
+puts 'Generating new Reviews...'
 
-# Cocktail.all.each do |cocktail|
-#   rand(5..10).times do
-#     cocktail.reviews.create(
-#       content: Faker::ChuckNorris.fact,
-#       rating: rand(0..5)
-#     )
-#   end
-# end
+Cocktail.all.each do |cocktail|
+  rand(5..10).times do
+    cocktail.reviews.create(
+      content: Faker::ChuckNorris.fact,
+      rating: rand(0..5)
+    )
+  end
+end
 
-# puts "Created #{Review.count} reviews in the database..."
-# puts "Enjoy!"
+puts "Created #{Review.count} reviews in the database..."
+puts "Enjoy!"
 
-# #---- GENERATE JSON WITH CLOUDINARY URLs from local db per Cocktail::name
+# #---- BONUS: GENERATE JSON WITH CLOUDINARY URLs from local db per Cocktail::name
 
 # array = []
 
