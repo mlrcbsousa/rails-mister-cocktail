@@ -1,14 +1,6 @@
 <!-- app/views/cocktails/index.html.erb -->
 <div class="container">
 
-<!-- app/views/articles/index.html.erb -->
-<%= cl_image_tag("yfov2dbiplkpch0us7zy",
-      width: 400, height: 300, crop: :fill) %>
-
-<!-- for face detection -->
-<%= cl_image_tag("tokfl97xbxultgc6qjoo",
-      width: 150, height: 150, crop: :thumb, gravity: :face) %>
-
   <div class="row">
     <div class="col-xs-12">
       <h1>All our Cocktails <%= "(#{@total})" if @query.nil? %></h1>
@@ -21,6 +13,7 @@
       <% end %>
     </div>
   </div>
+
   <div class="row">
 
     <% @cocktails.each do |cocktail| %>
@@ -41,4 +34,5 @@
     <% end %>
 
   </div>
+
 </div>
