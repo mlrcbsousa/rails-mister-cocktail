@@ -1,5 +1,28 @@
 class PhotoUploader < CarrierWave::Uploader::Base
   include Cloudinary::CarrierWave
+  # process eager: true # Force version generation at upload time.
+  process convert: 'jpg'
+
+  def public_id
+    "lewagon/mistercocktails/#{model.class.downcase}/" + Cloudinary::Utils.random_public_id
+  end
+
+  version :thumbnail do
+    resize_to_fit 180, 180
+  end
+
+  version :standard do
+    process resize_to_fill: [700, 700, :north]
+  end
+
+  version :bright_face do
+    cloudinary_transformation effect: 'brightness:30',
+                              radius: 20,
+                              width: 150,
+                              height: 150,
+                              crop: :thumb,
+                              gravity: :face
+  end
 
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick

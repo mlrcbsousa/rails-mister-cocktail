@@ -77,8 +77,8 @@ require 'open-uri'
 # puts 'Clearing database of Doses...'
 # Dose.destroy_all
 
-puts 'Clearing database of Ingredients...'
-Ingredient.destroy_all
+# puts 'Clearing database of Ingredients...'
+# Ingredient.destroy_all
 
 # puts 'Clearing database of Reviews...'
 # Review.destroy_all
@@ -88,59 +88,66 @@ Ingredient.destroy_all
 
 results = JSON.parse(File.read("drinks.json"), symbolize_names: true)
 
-#---- Generate Ingredients
+# #---- Generate Ingredients
 
-puts 'Generating new Ingredients...'
+# puts 'Generating new Ingredients...'
 
-results.each do |result|
-  (1..15).each do |n|
-    name = result[:"strIngredient#{n}"]
-    Ingredient.create(name: name) if name&.match?(/\w/)
-  end
-end
+# results.each do |result|
+#   (1..15).each do |n|
+#     name = result[:"strIngredient#{n}"]
+#     Ingredient.create(name: name) if name&.match?(/\w/)
+#   end
+# end
 
-puts "Created #{Ingredient.count} ingredients in the database..."
+# puts "Created #{Ingredient.count} ingredients in the database..."
+
+results_1 = results[0..49]
+results_2 = results[50..99]
+results_3 = results[100..149]
+results_4 = results[150..199]
+results_5 = results[200..249]
+results_6 = results[250..299]
+results_7 = results[300..349]
+results_8 = results[350..399]
+results_9 = results[400..449]
+results_10 = results[450..499]
+results_11 = results[500..546]
+
+# #---- Manually run this iteration for each of the results_# array above while
+# #---- waiting a couple of seconds before each for best results
 
 #---- Generate Cocktails
 
-# puts 'Generating new Cocktails...'
+puts 'Generating new Cocktails...'
 
-# results.each do |result|
-#   Cocktail.create(
-#     name: result[:strDrink],
-#     picture_url: result[:strDrinkThumb]
-#   )
-# end
+results_1.each do |result|
+  cocktail = Cocktail.new(
+    name: result[:strDrink],
+    picture_url: result[:strDrinkThumb]
+  )
+  cocktail.remote_photo_url = result[:strDrinkThumb]
+  cocktail.save
+end
 
-# puts "Created #{Cocktail.count} cocktails in the database..."
+puts "Created #{Cocktail.count} cocktails in the database..."
 
 # #---- Generate Doses
 
 # puts 'Generating new Doses...'
 
-# # results = JSON.parse(File.read("drinks.json"), symbolize_names: true)
-
 # results.each do |result|
 #   cocktail = Cocktail.find_by(name: result[:strDrink])
-
 #   (1..15).each do |n|
 #     ingredient = Ingredient.find_by(name: result[:"strIngredient#{n}"])
-#     if ingredient
-#       cocktail.doses.create(
-#         description: result[:"strMeasure#{n}"],
-#         ingredient: ingredient
-#       )
-#     elsif result[:"strIngredient#{n}"] && result[:"strIngredient#{n}"].match?(/\w/)
-#       ingredient = Ingredient.create(name: result[:"strIngredient#{n}"])
-#       cocktail.doses.create(
-#         description: result[:"strMeasure#{n}"],
-#         ingredient: ingredient
-#       )
-#     end
+#     next unless ingredient
+
+#     cocktail.doses.create(
+#       description: result[:"strMeasure#{n}"],
+#       ingredient: ingredient
+#     )
 #   end
 # end
 
-# puts "New total ingredients: #{Ingredient.count}..."
 # puts "Created #{Dose.count} doses in the database..."
 
 # #---- Generate Reviews
