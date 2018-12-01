@@ -77,8 +77,8 @@ require 'open-uri'
 puts 'Clearing database of Doses...'
 Dose.destroy_all
 
-puts 'Clearing database of Ingredients...'
-Ingredient.destroy_all
+# puts 'Clearing database of Ingredients...'
+# Ingredient.destroy_all
 
 # puts 'Clearing database of Reviews...'
 # Review.destroy_all
@@ -88,18 +88,18 @@ Ingredient.destroy_all
 
 results = JSON.parse(File.read("drinks.json"), symbolize_names: true)
 
-#---- Generate Ingredients
+# ---- Generate Ingredients
 
-puts 'Generating new Ingredients...'
+# puts 'Generating new Ingredients...'
 
-results.each do |result|
-  (1..15).each do |n|
-    name = result[:"strIngredient#{n}"]
-    Ingredient.create(name: name) if name&.match?(/\w/)
-  end
-end
+# results.each do |result|
+#   (1..15).each do |n|
+#     name = result[:"strIngredient#{n}"]
+#     Ingredient.create(name: name) if name&.match?(/\w/)
+#   end
+# end
 
-puts "Created #{Ingredient.count} ingredients in the database..."
+# puts "Created #{Ingredient.count} ingredients in the database..."
 
 # results_1 = results[200..224]
 # results_2 = results[225..249]
@@ -150,10 +150,10 @@ results.each do |result|
     ingredient = Ingredient.find_by(name: result[:"strIngredient#{n}"])
     next unless ingredient
 
-    cocktail.doses.create(
-      description: result[:"strMeasure#{n}"],
-      ingredient: ingredient
-    )
+    dose = cocktail.doses.new(ingredient: ingredient)
+    description = result[:"strMeasure#{n}"]
+    dose.description = description if description&.match?(/\w/)
+    dose.save
   end
 end
 
