@@ -1,0 +1,15 @@
+<!-- views/components/_review.html.erb -->
+<div class="review">
+  <div class="review-rating">
+    <% review.rating.times do %>
+      <i class="fas fa-fire active"></i>
+    <% end %>
+    <% (5 - review.rating).times do %>
+      <i class="fas fa-fire inactive"></i>
+    <% end %>
+    <span><%= review.created_at.strftime("on %a, %-d %b %Y at %-I:%M%P") %></span>
+  </div>
+  <div class="review-body">
+    <p><%= review.content %></p>
+  </div>
+</div>

@@ -1,0 +1,6 @@
+<!-- views/components/_form_review.html.erb -->
+<%= simple_form_for [cocktail, review] do |f| %>
+  <%= f.input :content, label: 'Review' %>
+  <%= f.input :rating, collection: 0..5, label: 'Flames' %>
+  <%= f.submit 'Add', class: "btn btn-default" %>
+<% end %>

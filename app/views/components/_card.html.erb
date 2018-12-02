@@ -1,0 +1,20 @@
+<!-- views/components/_card.html.erb -->
+<div class="card" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url('<%= cl_image_path cocktail.photo %>')">
+  <div class="card-description">
+    <h2><%= cocktail.name %></h2>
+    <div class="review-rating">
+
+      <% reviews = cocktail.reviews %>
+      <% rating = reviews.inject(0) { |sum, n| sum + n.rating } / reviews.count %>
+
+      <% rating.times do %>
+        <i class="fas fa-fire active"></i>
+      <% end %>
+      <% (5 - rating).times do %>
+        <i class="fas fa-fire inactive"></i>
+      <% end %>
+
+    </div>
+  </div>
+  <%= link_to '', cocktail_path(cocktail), class: 'card-link' %>
+</div>

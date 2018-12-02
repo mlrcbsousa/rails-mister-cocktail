@@ -15,18 +15,11 @@
           <% @cocktail.doses.each do |dose| %>
               <li>
                 <% if dose.valid? %>
-                  <%= link_to dose_path(dose),
-                        method: :delete,
-                        data: { confirm: "Are you sure?" } do %>
-                          <i class="far fa-trash-alt"></i>
-                        <% end %>
-                  <strong><%= dose.description %>:</strong>
-                  <%= dose.ingredient.name %>
+                  <%= render 'components/dose', dose: dose %>
                 <% end %>
               </li>
           <% end %>
         </ul>
-
       </div>
 
       <div class="cocktail-show-card">
@@ -36,22 +29,7 @@
             <% @cocktail.reviews.each do |review| %>
               <li>
                 <% if review.valid? %>
-
-                  <div class="review">
-                    <div class="review-rating">
-                      <% review.rating.times do %>
-                        <i class="fas fa-fire active"></i>
-                      <% end %>
-                      <% (5 - review.rating).times do %>
-                        <i class="fas fa-fire inactive"></i>
-                      <% end %>
-                      <span><%= review.created_at.strftime("on %a, %-d %b %Y at %-I:%M%P") %></span>
-                    </div>
-                    <div class="review-body">
-                      <p><%= review.content %></p>
-                    </div>
-                  </div>
-
+                  <%= render 'components/review', review: review %>
                 <% end %>
               </li>
             <% end %>
@@ -60,20 +38,15 @@
       </div>
     </div>
 
-
     <div class="col-xs-12 col-sm-4">
       <div class="cocktail-show-card">
         <h3>New Dose</h3>
-        <%= render 'form_dose', cocktail: @cocktail, dose: @dose %>
+        <%= render 'components/form_dose', cocktail: @cocktail, dose: @dose %>
       </div>
 
       <div class="cocktail-show-card">
         <h3>New Review</h3>
-        <%= simple_form_for [@cocktail, @review] do |f| %>
-          <%= f.input :content, label: 'Review' %>
-          <%= f.input :rating, collection: 0..5, label: 'Flames' %>
-          <%= f.submit 'Add', class: "btn btn-default" %>
-        <% end %>
+        <%= render 'components/form_review', cocktail: @cocktail, review: @review %>
       </div>
     </div>
   </div>
