@@ -1,19 +1,23 @@
 <!-- app/views/cocktails/new.html.erb -->
-<div class="container mt-4">
-  <div class="row">
-    <div class="col-xs-12 col-sm-6 col-sm-offset-3 m-auto">
-      <div class="cocktail-form">
-        <h1>New cocktail</h1>
-        <div class="mt-3">
-          <%= simple_form_for(@cocktail) do |f| %>
-            <%= f.input :name %>
-            <%= f.input :remote_photo_url, label: 'Photo url' %>
-            <%= f.input :photo %>
-            <%= f.input :photo_cache, as: :hidden %>
-            <%= f.submit class: 'btn btn-outline-default' %>
-          <% end %>
+<div class="new">
+  <div class="container">
+
+    <div class="row">
+      <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+        <div class="cocktail-show-card">
+          <h1>New Cocktail</h1>
+          <div class="mt-3">
+            <%= simple_form_for(@cocktail) do |f| %>
+              <%= f.input :name %>
+              <%= f.input :remote_photo_url, label: 'Photo url' %>
+              <%= f.input :photo %>
+              <%= f.input :photo_cache, as: :hidden %>
+              <%= f.submit class: 'btn btn-primary' %>
+            <% end %>
+          </div>
         </div>
       </div>
     </div>
+
   </div>
 </div>
