@@ -3,14 +3,12 @@
 
   <div class="row">
     <div class="col-xs-12">
-      <h1>All our Cocktails <%= "(#{@total})" if @query.nil? %></h1>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12">
-      <% if @query %>
-        <p>You searched for <em class="text-primary">"<%= @query %>"</em>.. We found <strong class="text-primary"><%= @cocktails.count %></strong> cocktails out of <strong><%= @total %></strong> on our website.</p>
-      <% end %>
+      <div class="index-title">
+        <h1 class="text-primary">All our Cocktails <%= "(#{@total})" if @query.nil? %></h1>
+        <% if @query %>
+          <p>You searched for <em class="text-primary">"<%= @query %>"</em>.. We found <strong class="text-primary"><%= @cocktails.count %></strong> cocktails out of <strong><%= @total %></strong> on our website.</p>
+        <% end %>
+      </div>
     </div>
   </div>
 
@@ -19,16 +17,12 @@
     <% @cocktails.each do |cocktail| %>
       <div class="col-xs-12 col-sm-4">
 
-        <%= link_to cocktail_path(cocktail) do %>
-          <div class="cocktail-card">
-            <div class="cocktail-card-image" style="background-image: url('<%= cl_image_path cocktail.photo %>')"></div>
-            <div class="cocktail-card-content">
-              <div class="cocktail-card-title">
-                <h4><%= cocktail.name %></h4>
-              </div>
-            </div>
+        <div class="card" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url('<%= cl_image_path cocktail.photo %>')">
+          <div class="card-description">
+            <h2><%= cocktail.name %></h2>
           </div>
-        <% end %>
+          <%= link_to '', cocktail_path(cocktail), class: 'card-link' %>
+        </div>
 
       </div>
     <% end %>

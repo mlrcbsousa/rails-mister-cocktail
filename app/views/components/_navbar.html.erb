@@ -1,8 +1,6 @@
 <nav class="my-navbar">
   <%= link_to root_path do %>
-    <button type="button" class="btn btn-default">
-      <span class="glyphicon glyphicon-glass"></span>
-    </button>
+    <%= cl_image_tag("lewagon/mistercocktails/logo/logo-mister-cocktail.png", height: 70) %>
   <% end %>
 
   <div class="nav-right">
@@ -10,7 +8,7 @@
       <div class="input-group">
         <input type="text" class="form-control" name="query" placeholder=<%= @query ? @query : "Search" %>>
         <span class="input-group-btn">
-          <button type="submit" class="btn btn-warning">
+          <button type="submit" class="btn btn-default">
             <span class="glyphicon glyphicon-search"></span>
           </button>
         </span>
@@ -18,7 +16,7 @@
     </form>
 
     <%= link_to new_cocktail_path do %>
-      <button type="button" class="btn btn-default">
+      <button type="button" class="btn btn-primary">
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
       </button>
     <% end %>
