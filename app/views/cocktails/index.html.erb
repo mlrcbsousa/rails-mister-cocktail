@@ -1,17 +1,12 @@
 <!-- app/views/cocktails/index.html.erb -->
 <div class="container">
 
-  <div class="row">
-    <div class="col-xs-12">
-      <div class="index-title">
-        <h1 class="text-primary">All our Cocktails <%= "(#{@total})" if @query.nil? %></h1>
-        <% if @query %>
-          <p>You searched for <em class="text-primary">"<%= @query %>"</em>.. We found <strong class="text-primary"><%= @cocktails.count %></strong> cocktails out of <strong><%= @total %></strong> on our website.</p>
-        <% end %>
-      </div>
-    </div>
+  <div class="index-title">
+    <h1 class="text-primary">All our Cocktails <%= "(#{@total})" if @query.nil? %></h1>
+    <% if @query %>
+      <p>You searched for <em class="text-primary">"<%= @query %>"</em>.. We found <strong class="text-primary"><%= @cocktails.total_count %></strong> cocktails out of <strong><%= @total %></strong> on our website.</p>
+    <% end %>
   </div>
-
   <div class="row">
 
     <% @cocktails.each do |cocktail| %>
@@ -21,5 +16,5 @@
     <% end %>
 
   </div>
-
+  <%= paginate @cocktails %>
 </div>

@@ -2,7 +2,8 @@ class CocktailsController < ApplicationController
   def index
     @total = Cocktail.count
     @query = params[:query]
-    @cocktails = @query ? Cocktail.where("name LIKE '%#{@query}%'") : Cocktail.all
+    cocktails = @query ? Cocktail.where("name LIKE '%#{@query}%'") : Cocktail.all
+    @cocktails = cocktails.order(:name).page params[:page]
   end
 
   def show
