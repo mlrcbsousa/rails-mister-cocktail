@@ -1,18 +1,24 @@
 <nav class="my-navbar">
   <%= link_to root_path do %>
-  <button type="button" class="btn btn-default" aria-label="Left Align">
-      <span class="glyphicon glyphicon-glass" aria-hidden="true"></span>
+    <button type="button" class="btn btn-default">
+      <span class="glyphicon glyphicon-glass"></span>
     </button>
   <% end %>
 
   <div class="nav-right">
     <form class="form-inline" action='/' method="get">
-      <input class="form-control" name="query" type="search" placeholder=<%= @query ? @query : "Search" %>>
-      <button class="btn btn-success" type="submit">Search</button>
+      <div class="input-group">
+        <input type="text" class="form-control" name="query" placeholder=<%= @query ? @query : "Search" %>>
+        <span class="input-group-btn">
+          <button type="submit" class="btn btn-warning">
+            <span class="glyphicon glyphicon-search"></span>
+          </button>
+        </span>
+      </div><!-- /input-group -->
     </form>
 
     <%= link_to new_cocktail_path do %>
-      <button type="button" class="btn btn-default" aria-label="Right Align">
+      <button type="button" class="btn btn-default">
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
       </button>
     <% end %>
