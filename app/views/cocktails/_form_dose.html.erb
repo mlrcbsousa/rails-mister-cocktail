@@ -1,0 +1,6 @@
+<!-- views/cocktails/_form_dose.html.erb -->
+<%= simple_form_for [cocktail, dose] do |f| %>
+  <%= f.input :description, label: 'Quantity' %>
+  <%= f.association :ingredient, input_html: { class: 'select2' } %>
+  <%= f.submit 'Add', class: 'btn btn-default' %>
+<% end %>

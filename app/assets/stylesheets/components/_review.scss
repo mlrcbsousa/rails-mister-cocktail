@@ -1,0 +1,40 @@
+  // display: flex;
+  // align-items: center;
+
+.review {
+  padding: 10px;
+  border-bottom: 10px solid rgba(220,224,244,0.4);
+  &:last-child {
+    border-bottom: none;
+  }
+}
+.review-rating {
+  font-size: 14px;
+  font-weight: bold;
+  .active,
+  .inactive {
+    text-shadow: 1px 1px 2px $light-gray;
+  }
+  .active {
+    color: $orange;
+  }
+  .inactive {
+    color: $yellow;
+  }
+  span {
+    margin-left: 5px;
+    color: $gray;
+    opacity: 0.5;
+  }
+}
+
+.review-body {
+  // padding-left: 10px;
+  // font-size: 13px;
+  // color: rgba(0,0,0,0.7);
+  // padding-left: 20px;
+  // color: rgba(0,0,0,0.4);
+  p {
+    margin: 6px 0;
+  }
+}
