@@ -13,11 +13,11 @@
         <h3>Ingredients:</h3>
         <ul class="list-unstyled">
           <% @cocktail.doses.each do |dose| %>
-              <li>
-                <% if dose.valid? %>
-                  <%= render 'components/dose', dose: dose %>
-                <% end %>
-              </li>
+            <li>
+              <% if dose.valid? %>
+                <%= render 'components/dose', dose: dose %>
+              <% end %>
+            </li>
           <% end %>
         </ul>
       </div>
